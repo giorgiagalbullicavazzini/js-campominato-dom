@@ -80,9 +80,13 @@ function addClassEvent(element, className) {
 // Thanks to a button, the user can generate a square grid
 const containerGrid = document.querySelector('.grid');
 const play = document.querySelector('.play');
+const points = document.querySelector('.points');
+const pointsText = document.querySelector('.points-text');
 
 play.addEventListener('click', function() {
     containerGrid.innerHTML = '';
+    points.innerText = '0';
+    pointsText.classList.remove('hidden');
 
     // Before playing the game, the user can select the difficulty level of the game: easy, medium or hard
     // The number of cells will be decided by recalling the proper function and by adding the correct value to the function arguments
@@ -99,7 +103,8 @@ play.addEventListener('click', function() {
     console.log(bombCells);
 
     // The maximum number of clicks can be managed thanks to an empty array
-    const points = [];
+    const clickedCells = [];
+    let pointsCounter = 0;
 
     // Creation of the grid
     for (let i = 1; i <= cells; i++) {
@@ -123,12 +128,18 @@ play.addEventListener('click', function() {
             addClassEvent(cell, 'active');
             cell.addEventListener('click', function() {
                 // The user reaches the game over state if they reach the maximum number of clicks (number or cells of the grid - number of bombs)
-                if (!points.includes(i) && points.length === cells - 1 - bombNumber) {
+                if (!clickedCells.includes(i) && clickedCells.length === cells - 1 - bombNumber) {
                     alert('Hai vinto!');
                 }
-                else if (!points.includes(i)) {
+                else if (!clickedCells.includes(i)) {
                     // The points array can be filled with the numbers clicked by the user
-                    points.push(i);
+                    clickedCells.push(i);
+
+                    // For every push made in the array, the user scores 1 point
+                    pointsCounter = clickedCells.length;
+
+                    // At the end of the game, the software generates the final score of the user
+                    points.innerText = pointsCounter;
                 }
             })
         } else {
@@ -143,10 +154,6 @@ play.addEventListener('click', function() {
     }
 })
 
-
-// With the push, we can then manage the user score
-// For every push made in the array, the user scores 1 point
-// At the end of the game, the software generates the final score of the user
 
 
 // IF the user clicks on a bomb cell, the game is over and the grid cannot be clicked anymore

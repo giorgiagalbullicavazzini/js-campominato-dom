@@ -36,6 +36,10 @@
     flex-grow: 1;
 }
 
+.hidden {
+    display: none;
+}
+
 .p-20 {
     padding: 1.25rem;
 }
