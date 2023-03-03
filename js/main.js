@@ -109,6 +109,7 @@ play.addEventListener('click', function() {
         })
     }
 
+    // Regardless of the difficulty chosen by the user, the grid will always contain 16 bombs;
     randomArray(16, 1, cells);
 })
 
