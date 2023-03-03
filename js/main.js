@@ -47,7 +47,7 @@ function gridRowGenerator (value) {
     return counter;
 }
 
-// Random number array generator
+// A function to create a random number array generator
 function randomArray(arrayElements, min, max) {
     // Creation of an empty array
     const generatedArray = [];
@@ -63,7 +63,14 @@ function randomArray(arrayElements, min, max) {
         }
     }
 
-    console.log(generatedArray);
+    return generatedArray;
+}
+
+// A function to manage a click eventListener that adds a specific CSS class
+function addClassEvent(element, className) {
+    element.addEventListener('click', function() {
+        addClass(element, className);
+    })
 }
 
 ////////////
@@ -84,6 +91,11 @@ play.addEventListener('click', function() {
     const row = gridRowGenerator(difficulty);
     const cells = row * row;
 
+    // Regardless of the difficulty chosen by the user, the grid will always contain 16 bombs;
+    const bombCells = randomArray(16, 1, cells);
+
+    console.log(bombCells);
+
     // Creation of the grid
     for (let i = 1; i <= cells; i++) {
         // The cells have the proper class and numbers
@@ -100,23 +112,23 @@ play.addEventListener('click', function() {
             addClass(cell, 'cell-7');
         }
 
+        // The cells have a click eventListener
+        // IF the cell turns blue and the user can keep playing
+        if (!bombCells.includes(i)) {
+            addClassEvent(cell, 'active');
+        } else {
+            // ELSE the number of the cell is inside the bomb array, the cell turns red and the game is over
+            addClassEvent(cell, 'bomb');
+            cell.addEventListener('click', function() {
+                alert('Game over!');
+            })
+        }
+
         containerGrid.append(cell);
-
-        // The cells have a click eventListener 
-        cell.addEventListener('click', function() {
-            addClass(cell, 'active');
-            console.log(i);
-        })
     }
-
-    // Regardless of the difficulty chosen by the user, the grid will always contain 16 bombs;
-    randomArray(16, 1, cells);
 })
 
 
-// We can now modify the function able to make the cells clickable
-// IF the number of the cell is inside the bomb array, the cell turns red and the game is over
-// ELSE the cell turns blue and the user can keep playing
 // The user reaches the game over state if they click on a bomb cell or if they reach the maximum number of clicks (number or cells of the grid - 16 bombs)
 // The maximum number of clicks can be managed thanks to another empty array
 // This array can be filled with the numbers clicked by the user
