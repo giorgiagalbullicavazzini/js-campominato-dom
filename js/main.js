@@ -53,7 +53,7 @@ function randomArray(arrayElements, min, max) {
     const generatedArray = [];
 
     // The array will be filled by a while loop
-    // The loop will generate 16 random numbers between 1 and the number of cells of the grid
+    // The loop will generate some random numbers between a min and a max number
     while (generatedArray.length < arrayElements) {
         const randomNumber = Math.floor(Math.random() * (max - min + 1)) + min;
 
@@ -91,10 +91,15 @@ play.addEventListener('click', function() {
     const row = gridRowGenerator(difficulty);
     const cells = row * row;
 
-    // Regardless of the difficulty chosen by the user, the grid will always contain 16 bombs;
-    const bombCells = randomArray(16, 1, cells);
+    const bombNumber = 16;
+
+    // Regardless of the difficulty chosen by the user, the grid will always contain the same number of bombs;
+    const bombCells = randomArray(bombNumber, 1, cells);
 
     console.log(bombCells);
+
+    // The maximum number of clicks can be managed thanks to an empty array
+    const points = [];
 
     // Creation of the grid
     for (let i = 1; i <= cells; i++) {
@@ -116,6 +121,16 @@ play.addEventListener('click', function() {
         // IF the cell turns blue and the user can keep playing
         if (!bombCells.includes(i)) {
             addClassEvent(cell, 'active');
+            cell.addEventListener('click', function() {
+                // The user reaches the game over state if they reach the maximum number of clicks (number or cells of the grid - number of bombs)
+                if (!points.includes(i) && points.length === cells - 1 - bombNumber) {
+                    alert('Hai vinto!');
+                }
+                else if (!points.includes(i)) {
+                    // The points array can be filled with the numbers clicked by the user
+                    points.push(i);+
+                }
+            })
         } else {
             // ELSE the number of the cell is inside the bomb array, the cell turns red and the game is over
             addClassEvent(cell, 'bomb');
@@ -129,10 +144,6 @@ play.addEventListener('click', function() {
 })
 
 
-// The user reaches the game over state if they click on a bomb cell or if they reach the maximum number of clicks (number or cells of the grid - 16 bombs)
-// The maximum number of clicks can be managed thanks to another empty array
-// This array can be filled with the numbers clicked by the user
-// IF the number isn't part of the array, we can add it with the `push` method
 // With the push, we can then manage the user score
 // For every push made in the array, the user scores 1 point
 // At the end of the game, the software generates the final score of the user
