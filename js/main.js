@@ -47,6 +47,25 @@ function gridRowGenerator (value) {
     return counter;
 }
 
+// Random number array generator
+function randomArray(arrayElements, min, max) {
+    // Creation of an empty array
+    const generatedArray = [];
+
+    // The array will be filled by a while loop
+    // The loop will generate 16 random numbers between 1 and the number of cells of the grid
+    while (generatedArray.length < arrayElements) {
+        const randomNumber = Math.floor(Math.random() * (max - min + 1)) + min;
+
+        // In order to avoid duplicate numbers, the loop will also check if the randomized number is inside the array or not
+        if (!generatedArray.includes(randomNumber)) {
+            generatedArray.push(randomNumber);
+        }
+    }
+
+    console.log(generatedArray);
+}
+
 ////////////
 // Main
 ////////////
@@ -89,15 +108,9 @@ play.addEventListener('click', function() {
             console.log(i);
         })
     }
+
+    randomArray(16, 1, cells);
 })
-
-
-
-// Regardless of the difficulty chosen by the user, the minesweeper grid will contain 16 bombs, placed in 16 random cells
-// In order to generate them, we need to create an empty array
-// The array will then be filled by a `while` loop
-// The loop will generate 16 random numbers between 1 and the number of cells of the grid
-// In order to avoid duplicate numbers, the loop will also check if the randomized number is inside the array or not
 
 
 // We can now modify the function able to make the cells clickable
