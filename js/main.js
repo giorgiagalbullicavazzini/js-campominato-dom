@@ -128,7 +128,7 @@ play.addEventListener('click', function() {
                 }
                 else if (!points.includes(i)) {
                     // The points array can be filled with the numbers clicked by the user
-                    points.push(i);+
+                    points.push(i);
                 }
             })
         } else {
