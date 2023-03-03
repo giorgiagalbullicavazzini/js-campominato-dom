@@ -1,0 +1,137 @@
+/*
+=============
+ Reset
+=============
+*/
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+/*
+=============
+ Var
+=============
+*/
+
+:root {
+    --border-color: #000000;
+    --main-color: #7fffd4;
+    --side-color: #ffffff;
+}
+
+/*
+=============
+ Common
+=============
+*/
+
+.flex {
+    display: flex;
+}
+
+.flex-grow-1 {
+    flex-grow: 1;
+}
+
+.p-20 {
+    padding: 1.25rem;
+}
+
+img {
+    display: block;
+}
+
+/*
+=============
+ Container
+=============
+*/
+
+body {
+    background-color: var(--main-color);
+}
+
+.container {
+    flex-direction: column;
+    height: 100vh;
+}
+
+/*
+=============
+ Header
+=============
+*/
+
+header {
+    background-color: var(--side-color);
+}
+
+header .header-left,
+header .header-right {
+    width: 50%;
+}
+
+header .logo img {
+    width: 3.125rem;
+}
+
+header .header-right {
+    text-align: right;
+}
+
+/*
+=============
+ Main
+=============
+*/
+
+main {
+    align-items: center;
+    justify-content: center;
+}
+
+main .grid {
+    align-content: flex-start;
+    flex-wrap: wrap;
+    height: 700px;
+    width: 700px;
+}
+
+main .cell {
+    align-items: center;
+    border: 1px solid var(--border-color);
+    display: flex;
+    justify-content: center;
+}
+
+main .cell.cell-10 {
+    height: calc(100% / 10);
+    width: calc(100% / 10);
+}
+
+main .cell.cell-9 {
+    height: calc(100% / 9);
+    width: calc(100% / 9);
+}
+
+main .cell.cell-7 {
+    height: calc(100% / 7);
+    width: calc(100% / 7);
+}
+
+main .cell.active {
+    background-color: lightblue;
+}
+
+/*
+=============
+ Footer
+=============
+*/
+
+footer {
+    background-color: var(--side-color);
+}
