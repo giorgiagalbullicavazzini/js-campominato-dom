@@ -96,7 +96,7 @@ play.addEventListener('click', function () {
     const row = gridRowGenerator(difficulty);
     const cells = row * row;
 
-    const bombNumber = 1;
+    const bombNumber = 16;
 
     // Regardless of the difficulty chosen by the user, the grid will always contain the same number of bombs;
     const bombCells = randomArray(bombNumber, 1, cells);
@@ -164,6 +164,11 @@ play.addEventListener('click', function () {
             cell.addEventListener('click', function gameOver() {
                 const cellItems = document.querySelectorAll('.cell');
                 for (let i = 0; i < cellItems.length; i++) {
+                    // At the game over state, the software reveals all the bombs
+                    if (bombCells.includes(i + 1)) {
+                        cellItems[i].classList.add('bomb');
+                    }
+
                     cellItems[i].replaceWith(cellItems[i].cloneNode(true));
                 }
 
@@ -174,12 +179,3 @@ play.addEventListener('click', function () {
         containerGrid.append(cell);
     }
 })
-
-
-
-
-
-
-// At the game over state, the software reveals all the bombs
-// This behaviour can be triggered with a for loop
-// IF the user clicks on a bomb cell, all the cells contained in the bomb array turn red
