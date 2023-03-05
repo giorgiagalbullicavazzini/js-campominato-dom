@@ -96,7 +96,7 @@ play.addEventListener('click', function () {
     const row = gridRowGenerator(difficulty);
     const cells = row * row;
 
-    const bombNumber = 16;
+    const bombNumber = 1;
 
     // Regardless of the difficulty chosen by the user, the grid will always contain the same number of bombs;
     const bombCells = randomArray(bombNumber, 1, cells);
@@ -133,7 +133,6 @@ play.addEventListener('click', function () {
                 if (!clickedCells.includes(i) && clickedCells.length === cells - 1 - bombNumber) {
                     // The points array can be filled with the numbers clicked by the user
                     clickedCells.push(i);
-                    console.log(clickedCells);
                     // For every push made in the array, the user scores 1 point
                     pointsCounter = clickedCells.length;
                     // At the end of the game, the software generates the final score of the user
@@ -141,6 +140,11 @@ play.addEventListener('click', function () {
 
                     const cellItems = document.querySelectorAll('.cell');
                     for (let i = 0; i < cellItems.length; i++) {
+                        // At the game over state, the software reveals all the bombs
+                        if (bombCells.includes(i + 1)) {
+                            cellItems[i].classList.add('bomb');
+                        }
+                    
                         cellItems[i].replaceWith(cellItems[i].cloneNode(true));
                     }
 
@@ -149,7 +153,6 @@ play.addEventListener('click', function () {
                 } else if (!clickedCells.includes(i)) {
                     // The points array can be filled with the numbers clicked by the user
                     clickedCells.push(i);
-                    console.log(clickedCells);
                     // For every push made in the array, the user scores 1 point
                     pointsCounter = clickedCells.length;
                     // At the end of the game, the software generates the final score of the user
