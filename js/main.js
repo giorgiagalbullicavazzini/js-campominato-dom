@@ -5,24 +5,24 @@
 ////////////
 
 // A function to create an element
-function elementCreation (elementType) {
+function elementCreation(elementType) {
     const element = document.createElement(elementType);
 
     return element;
 }
 
 // A function to add a class to an element
-function addClass (element, className) {
+function addClass(element, className) {
     element.classList.add(className);
 }
 
 // A function to add a text to an element
-function addText (element, text) {
+function addText(element, text) {
     element.innerText = text;
 }
 
 // A function to save the number of rows of a grid game
-function gridRowGenerator (value) {
+function gridRowGenerator(value) {
     let counter = 0;
 
     switch (value) {
@@ -30,11 +30,11 @@ function gridRowGenerator (value) {
         case '':
             alert('Seleziona la difficoltà!');
             break;
-        
+
         case 'easy':
             counter = 10;
             break;
-        
+
         case 'medium':
             counter = 9;
             break;
@@ -68,7 +68,7 @@ function randomArray(arrayElements, min, max) {
 
 // A function to manage a click eventListener that adds a specific CSS class
 function addClassEvent(element, className) {
-    element.addEventListener('click', function() {
+    element.addEventListener('click', function () {
         addClass(element, className);
     })
 }
@@ -83,7 +83,8 @@ const play = document.querySelector('.play');
 const points = document.querySelector('.points');
 const pointsText = document.querySelector('.points-text');
 
-play.addEventListener('click', function() {
+
+play.addEventListener('click', function () {
     containerGrid.innerHTML = '';
     points.innerText = '0';
     pointsText.classList.remove('hidden');
@@ -95,7 +96,7 @@ play.addEventListener('click', function() {
     const row = gridRowGenerator(difficulty);
     const cells = row * row;
 
-    const bombNumber = 16;
+    const bombNumber = 1;
 
     // Regardless of the difficulty chosen by the user, the grid will always contain the same number of bombs;
     const bombCells = randomArray(bombNumber, 1, cells);
@@ -123,29 +124,49 @@ play.addEventListener('click', function() {
         }
 
         // The cells have a click eventListener
-        // IF the cell turns blue and the user can keep playing
-        if (!bombCells.includes(i)) {
+        // IF the cell is a normal one, it turns blue and the user can keep playing
+        if (!bombCells.includes(i)) { 
             addClassEvent(cell, 'active');
-            cell.addEventListener('click', function() {
+
+            cell.addEventListener('click', function keepPlaying() {
                 // The user reaches the game over state if they reach the maximum number of clicks (number or cells of the grid - number of bombs)
                 if (!clickedCells.includes(i) && clickedCells.length === cells - 1 - bombNumber) {
-                    alert('Hai vinto!');
-                }
-                else if (!clickedCells.includes(i)) {
                     // The points array can be filled with the numbers clicked by the user
                     clickedCells.push(i);
-
+                    console.log(clickedCells);
                     // For every push made in the array, the user scores 1 point
                     pointsCounter = clickedCells.length;
+                    // At the end of the game, the software generates the final score of the user
+                    points.innerText = pointsCounter;
 
+                    const cellItems = document.querySelectorAll('.cell');
+                    for (let i = 0; i < cellItems.length; i++) {
+                        cellItems[i].replaceWith(cellItems[i].cloneNode(true));
+                    }
+
+                    alert('Hai vinto!');
+
+                } else if (!clickedCells.includes(i)) {
+                    // The points array can be filled with the numbers clicked by the user
+                    clickedCells.push(i);
+                    console.log(clickedCells);
+                    // For every push made in the array, the user scores 1 point
+                    pointsCounter = clickedCells.length;
                     // At the end of the game, the software generates the final score of the user
                     points.innerText = pointsCounter;
                 }
             })
         } else {
-            // ELSE the number of the cell is inside the bomb array, the cell turns red and the game is over
+            // IF the number of the cell is inside the bomb array, the cell turns red and the game is over
             addClassEvent(cell, 'bomb');
-            cell.addEventListener('click', function() {
+
+            // IF the user clicks on a bomb cell, the grid cannot be clicked anymore
+            cell.addEventListener('click', function gameOver() {
+                const cellItems = document.querySelectorAll('.cell');
+                for (let i = 0; i < cellItems.length; i++) {
+                    cellItems[i].replaceWith(cellItems[i].cloneNode(true));
+                }
+
                 alert('Game over!');
             })
         }
@@ -156,10 +177,9 @@ play.addEventListener('click', function() {
 
 
 
-// IF the user clicks on a bomb cell, the game is over and the grid cannot be clicked anymore
-// In order to achieve this result, we can just remove the cell EventListener
+
 
 
 // At the game over state, the software reveals all the bombs
-// This behaviour can be triggered with a `for` loop
+// This behaviour can be triggered with a for loop
 // IF the user clicks on a bomb cell, all the cells contained in the bomb array turn red
