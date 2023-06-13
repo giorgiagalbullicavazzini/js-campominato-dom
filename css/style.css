@@ -70,6 +70,7 @@ body {
 */
 
 header {
+    align-items: center;
     background-color: var(--side-color);
 }
 
@@ -78,8 +79,17 @@ header .header-right {
     width: 50%;
 }
 
-header .logo img {
+header .header-left {
+    align-items: center;
+}
+
+header .header-left .logo img {
+    margin-right: .625rem;
     width: 3.125rem;
+}
+
+header .header-left .title {
+    font-size: 1.25rem;
 }
 
 header .header-right {
@@ -142,4 +152,8 @@ main .cell.bomb {
 
 footer {
     background-color: var(--side-color);
+}
+
+footer .points-text {
+    margin-left: .625rem;
 }

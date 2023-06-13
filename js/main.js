@@ -81,12 +81,14 @@ function addClassEvent(element, className) {
 const containerGrid = document.querySelector('.grid');
 const play = document.querySelector('.play');
 const points = document.querySelector('.points');
+const pointsType = document.querySelector('.points-type');
 const pointsText = document.querySelector('.points-text');
 
 
 play.addEventListener('click', function () {
     containerGrid.innerHTML = '';
     points.innerText = '0';
+    pointsType.innerText = 'punti';
     pointsText.classList.remove('hidden');
 
     // Before playing the game, the user can select the difficulty level of the game: easy, medium or hard
@@ -96,7 +98,7 @@ play.addEventListener('click', function () {
     const row = gridRowGenerator(difficulty);
     const cells = row * row;
 
-    const bombNumber = 1;
+    const bombNumber = 16;
 
     // Regardless of the difficulty chosen by the user, the grid will always contain the same number of bombs;
     const bombCells = randomArray(bombNumber, 1, cells);
@@ -137,6 +139,11 @@ play.addEventListener('click', function () {
                     pointsCounter = clickedCells.length;
                     // At the end of the game, the software generates the final score of the user
                     points.innerText = pointsCounter;
+                    if (pointsCounter === 1) {
+                        pointsType.innerText = "punto";
+                    } else {
+                        pointsType.innerText = "punti";
+                    }
 
                     const cellItems = document.querySelectorAll('.cell');
                     for (let i = 0; i < cellItems.length; i++) {
@@ -157,6 +164,11 @@ play.addEventListener('click', function () {
                     pointsCounter = clickedCells.length;
                     // At the end of the game, the software generates the final score of the user
                     points.innerText = pointsCounter;
+                    if (pointsCounter === 1) {
+                        pointsType.innerText = "punto";
+                    } else {
+                        pointsType.innerText = "punti";
+                    }
                 }
             })
         } else {
