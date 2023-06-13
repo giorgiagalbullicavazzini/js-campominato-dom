@@ -103,8 +103,6 @@ play.addEventListener('click', function () {
     // Regardless of the difficulty chosen by the user, the grid will always contain the same number of bombs;
     const bombCells = randomArray(bombNumber, 1, cells);
 
-    console.log(bombCells);
-
     // The maximum number of clicks can be managed thanks to an empty array
     const clickedCells = [];
     let pointsCounter = 0;
